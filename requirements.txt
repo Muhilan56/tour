@@ -5,3 +5,4 @@ Werkzeug
 requests
 Flask-Mail
 app
+gunicorn
