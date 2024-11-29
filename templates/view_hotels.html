@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels</title>
+    <!-- Bootstrap CSS for responsive design -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://i.pinimg.com/originals/81/6d/ad/816dad34ff89f6a31e16d56d8eab56c8.gif');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .hotel-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-evenly;
+        }
+
+        .hotel-card {
+            width: 100%;
+            max-width: 320px;
+            background-color: rgba(214, 214, 214, 0.9);
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hotel-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .hotel-card h3 {
+            font-size: 1.5rem;
+            color: #f5f2f2;
+            margin-bottom: 10px;
+        }
+
+        .hotel-card p {
+            font-size: 1rem;
+            color: #fafafa;
+            margin-bottom: 20px;
+        }
+
+        .hotel-card .price {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .hotel-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: rgb(253, 253, 253);
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hotel-card a:hover {
+            background-color: #45a049;
+        }
+
+        .hotel-card form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+
+        .hotel-card form button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e53935;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .hotel-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Hotels in {{ place.name }}</h1>
+
+    <div class="hotel-list">
+        {% for hotel in hotels %}
+            <div class="hotel-card">
+                <br>
+                <h3><a href="{{ url_for('view_hotel_details', hotel_id=hotel.id) }}">{{ hotel.name }}</a></h3>
+                <p>{{ hotel.description }}</p>
+                <p class="price">${{ hotel.price_per_night }} per night</p>
+    
+            
+
+    <form method="POST" action="{{ url_for('book_place', place_id=place.id) }}">
+        <h4>Select a Hotel</h4>
+        {% for hotel in hotels %}
+            <div>
+                <input type="radio" name="hotel_id" value="{{ hotel.id }}" id="hotel_{{ hotel.id }}" required>
+                <label for="hotel_{{ hotel.id }}">{{ hotel.name }}</label>
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-primary mt-3">Book Now</button>
+    </form>
+</div>
+{% endfor %}
+</div>
+    
+    <a href="{{ url_for('user_dashboard') }}" class="back-button">Back to Dashboard</a>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

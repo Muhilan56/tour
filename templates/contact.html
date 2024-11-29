@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Contact Numbers</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Background image with effect */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/originals/86/12/c2/8612c22876942f52c2788b314312da21.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Semi-transparent container */
+        .container {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .country-info {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .country-info h3 {
+            color: #ff9800;
+        }
+
+        .country-info p {
+            color: #ffffff;
+        }
+
+        /* Adding style for the GIF */
+        .gif-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .gif-container img {
+            width: 400px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container for the content -->
+    <div class="container">
+        <h1 class="text-center mb-4">Emergency Contact Numbers</h1>
+
+        <!-- Country selection dropdown -->
+        <div class="search-container">
+            <select id="countrySelect" class="form-control" onchange="displayEmergencyContacts()">
+                <option value="">Select a country</option>
+                <!-- Add all country options -->
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="India">India</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Mexico">Mexico</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Russia">Russia</option>
+                <option value="Spain">Spain</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Norway">Norway</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Singapore">Singapore</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Egypt">Egypt</option>
+            </select>
+        </div>
+
+        <!-- Emergency contacts information -->
+        <div id="countryInfo" class="country-info">
+            <h3>Select a country to see emergency contacts</h3>
+        </div>
+
+        <!-- GIF Container -->
+        <div id="gifContainer" class="gif-container">
+            <!-- GIF will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Emergency contacts data for 25 countries
+        const countries = {
+            "USA": {
+                "Police": "911",
+                "Ambulance": "911",
+                "Fire": "911",
+                "Hospital": "911"
+            },
+            "UK": {
+                "Police": "999",
+                "Ambulance": "999",
+                "Fire": "999",
+                "Hospital": "111"
+            },
+            "Canada": {
+                "Police": "911",
+                "Ambulance": "911",
+                "Fire": "911",
+                "Hospital": "911"
+            },
+            "Australia": {
+                "Police": "000",
+                "Ambulance": "000",
+                "Fire": "000",
+                "Hospital": "000"
+            },
+            "India": {
+                "Police": "100",
+                "Ambulance": "102",
+                "Fire": "101",
+                "Hospital": "108"
+            },
+            "Germany": {
+                "Police": "110",
+                "Ambulance": "112",
+                "Fire": "112",
+                "Hospital": "112"
+            },
+            "France": {
+                "Police": "17",
+                "Ambulance": "15",
+                "Fire": "18",
+                "Hospital": "15"
+            },
+            "Italy": {
+                "Police": "112",
+                "Ambulance": "118",
+                "Fire": "115",
+                "Hospital": "118"
+            },
+            "Japan": {
+                "Police": "110",
+                "Ambulance": "119",
+                "Fire": "119",
+                "Hospital": "119"
+            },
+            "China": {
+                "Police": "110",
+                "Ambulance": "120",
+                "Fire": "119",
+                "Hospital": "120"
+            },
+            "Brazil": {
+                "Police": "190",
+                "Ambulance": "192",
+                "Fire": "193",
+                "Hospital": "192"
+            },
+            "Mexico": {
+                "Police": "911",
+                "Ambulance": "911",
+                "Fire": "911",
+                "Hospital": "911"
+            },
+            "South Africa": {
+                "Police": "10111",
+                "Ambulance": "10177",
+                "Fire": "10177",
+                "Hospital": "10177"
+            },
+            "Russia": {
+                "Police": "102",
+                "Ambulance": "103",
+                "Fire": "101",
+                "Hospital": "103"
+            },
+            "Spain": {
+                "Police": "091",
+                "Ambulance": "061",
+                "Fire": "080",
+                "Hospital": "061"
+            },
+            "Argentina": {
+                "Police": "101",
+                "Ambulance": "107",
+                "Fire": "100",
+                "Hospital": "107"
+            },
+            "Netherlands": {
+                "Police": "112",
+                "Ambulance": "112",
+                "Fire": "112",
+                "Hospital": "112"
+            },
+            "Sweden": {
+                "Police": "112",
+                "Ambulance": "112",
+                "Fire": "112",
+                "Hospital": "112"
+            },
+            "Norway": {
+                "Police": "112",
+                "Ambulance": "113",
+                "Fire": "110",
+                "Hospital": "113"
+            },
+            "Switzerland": {
+                "Police": "117",
+                "Ambulance": "144",
+                "Fire": "118",
+                "Hospital": "144"
+            },
+            "New Zealand": {
+                "Police": "111",
+                "Ambulance": "111",
+                "Fire": "111",
+                "Hospital": "111"
+            },
+            "Singapore": {
+                "Police": "999",
+                "Ambulance": "995",
+                "Fire": "995",
+                "Hospital": "995"
+            },
+            "South Korea": {
+                "Police": "112",
+                "Ambulance": "119",
+                "Fire": "119",
+                "Hospital": "119"
+            },
+            "Thailand": {
+                "Police": "191",
+                "Ambulance": "1669",
+                "Fire": "199",
+                "Hospital": "1669"
+            },
+            "Turkey": {
+                "Police": "155",
+                "Ambulance": "112",
+                "Fire": "110",
+                "Hospital": "112"
+            },
+            "Egypt": {
+                "Police": "122",
+                "Ambulance": "123",
+                "Fire": "180",
+                "Hospital": "123"
+            }
+        };
+
+        // Function to display emergency contacts based on selected country
+        function displayEmergencyContacts() {
+            const selectedCountry = document.getElementById("countrySelect").value;
+            const countryInfoDiv = document.getElementById("countryInfo");
+            const gifContainerDiv = document.getElementById("gifContainer");
+
+            if (selectedCountry && countries[selectedCountry]) {
+                const country = countries[selectedCountry];
+                countryInfoDiv.innerHTML = `
+                    <h3>Emergency Contacts for ${selectedCountry}</h3>
+                    <p><strong>Police:</strong> ${country.Police}</p>
+                    <p><strong>Ambulance:</strong> ${country.Ambulance}</p>
+                    <p><strong>Fire:</strong> ${country.Fire}</p>
+                    <p><strong>Hospital:</strong> ${country.Hospital}</p>
+                `;
+                gifContainerDiv.innerHTML = `
+                    <img src="https://i.pinimg.com/originals/03/7b/53/037b5389a3b1abe450dcec133eabd8c0.gif" alt="Emergency GIF">
+                `;
+            } else {
+                countryInfoDiv.innerHTML = "<h3>Select a country to see emergency contacts</h3>";
+                gifContainerDiv.innerHTML = '';
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

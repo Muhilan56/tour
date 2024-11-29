@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hotel.name }} Details</title>
+    <!-- Bootstrap CSS for responsive design -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.kayak.co.in/news/wp-content/uploads/sites/76/2023/08/THEME_HOTEL_SIGN_FIVE_STARS_FACADE_BUILDING_GettyImages-1320779330-3.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: #cccccc;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .hotel-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: rgba(94, 94, 94, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hotel-info img {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .hotel-info .details {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .hotel-info .details h3 {
+            font-size: 1.8rem;
+            color: #e2e2e2;
+        }
+
+        .hotel-info .details p {
+            font-size: 1.1rem;
+            color: #dfdfdf;
+        }
+
+        .hotel-gallery {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .hotel-gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .weather-info {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            position: relative;
+        }
+
+        /* Weather card styles */
+        .weather-card {
+            width: 350px;
+            height: 235px;
+            position: relative;
+            padding: 25px;
+            background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #FFF7B1 0%, rgba(255, 255, 255, 0) 71.88%), #FFFFFF;
+            box-shadow: 0px 155px 62px rgba(0, 0, 0, 0.01), 0px 87px 52px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.09), 0px 10px 21px rgba(0, 0, 0, 0.1);
+            border-radius: 23px;
+            transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+            cursor: pointer;
+        }
+
+        .weather-card:hover {
+            transform: scale(1.05);
+        }
+
+        .weather-card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .weather-card-header span:first-child {
+            word-break: break-all;
+            font-weight: 800;
+            font-size: 15px;
+            line-height: 135%;
+            color: rgba(87, 77, 51, 0.66);
+        }
+
+        .weather-card-header span:last-child {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 135%;
+            color: rgba(87, 77, 51, 0.33);
+        }
+
+        .temp {
+            position: absolute;
+            left: 25px;
+            bottom: 12px;
+            font-weight: 700;
+            font-size: 64px;
+            line-height: 77px;
+            color: rgba(87, 77, 51, 1);
+        }
+
+        .temp-scale {
+            width: 80px;
+            height: 36px;
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 9px;
+        }
+
+        .temp-scale span {
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 134.49%;
+            color: rgba(87, 77, 51, 0.66);
+        }
+
+        .sunshine {
+            animation: sunshines 2s infinite;
+        }
+
+        @keyframes sunshines {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes clouds {
+            0% {
+                transform: translateX(15px);
+            }
+
+            50% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(15px);
+            }
+        }
+
+        /* Ensure responsiveness */
+        @media (max-width: 768px) {
+            .hotel-info {
+                flex-direction: column;
+            }
+
+            .hotel-info img {
+                max-width: 100%;
+                height: 200px;
+            }
+
+            .weather-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{ hotel.name }} Details</h1>
+
+    <div class="hotel-info">
+        
+        <div class="details">
+            <h3>{{ hotel.name }}</h3>
+            <p>{{ hotel.description }}</p>
+            <p><strong>Price:</strong> ${{ hotel.price_per_night }} per night</p>
+            
+            <!-- Display additional images -->
+            <h3>Hotel Gallery</h3>
+            <div class="hotel-gallery">
+                {% for image in hotel_images %}
+                    <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Hotel image">
+                {% endfor %}
+            </div>
+
+            <!-- Weather info card -->
+            <div class="weather-info">
+                <div class="weather-card">
+                    <div class="weather-card-header">
+                        <span>Current Weather</span>
+                        <span>{{ hotel.location }}</span>
+                    </div>
+                    <div class="temp">
+                        {% if is_raining %}
+                            🌧️
+                        {% else %}
+                            🌤️
+                        {% endif %}
+                    </div>
+                    <div class="temp-scale">
+                        <span>{{ current_temperature }}°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<center>
+    <a href="{{ url_for('view_hotels', place_id=hotel.place_id) }}" class="back-button">Back to Hotel List</a> </center>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

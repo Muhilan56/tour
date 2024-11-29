@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-image: url('https://i.pinimg.com/originals/d4/b2/75/d4b275b49306f9b1d1c9b56a98a48878.gif');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .place-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .place-card {
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .place-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .place-card h3 {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .place-card p {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .place-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .place-card a:hover {
+            background-color: #45a049;
+        }
+
+        .navbar {
+            margin-bottom: 30px;
+        }
+
+        .navbar input[type="text"] {
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .place-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .place-card h3 {
+                font-size: 18px;
+            }
+            .place-card p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar with Search -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Tourism Dashboard</a>
+        <form class="form-inline" onsubmit="searchPlaces(event)">
+            <input class="form-control mr-sm-2" type="text" id="searchInput" placeholder="Search by interest" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            
+        </form>
+        <a href="/contact" style="margin-left: auto; color:red;">HELP</a>
+</nav>
+    </nav>
+
+    <h1>Welcome to the Our TOUR-WORLD </h1>
+    <h2>Places</h2>
+
+    <div class="place-list" id="placeList">
+        {% for place in places %}
+            <div class="place-card" data-interest="{{ place.interest }}">
+                <img src="{{ place.image }}" alt="{{ place.name }}">
+                <h3>{{ place.name }}</h3>
+                <p>{{ place.interest }}</p>
+                <a href="{{ url_for('view_hotels', place_id=place.id) }}">View Hotels</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Search functionality
+        function searchPlaces(event) {
+            event.preventDefault(); // Prevent form submission
+            let searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            let placeCards = document.querySelectorAll(".place-card");
+
+            placeCards.forEach(function(card) {
+                let interest = card.getAttribute("data-interest").toLowerCase(); // Convert interest to lowercase
+                if (interest.includes(searchTerm)) {
+                    card.style.display = "block"; // Show the card
+                } else {
+                    card.style.display = "none"; // Hide the card
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Place</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/1600x900/?nature'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+            padding: 50px 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #d9534f; /* Red color for the delete message */
+        }
+        .btn-danger {
+            padding: 12px 20px;
+            background-color: #d9534f;
+            border-color: #d9534f;
+            width: 100%;
+            font-size: 16px;
+        }
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #c12e2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container col-md-6 mx-auto">
+        <h1>Are you sure you want to delete {{ place.name }}?</h1>
+        
+        <form method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
