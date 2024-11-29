@@ -1,4 +1,7 @@
-Flask==2.2.2
-Flask-SQLAlchemy==3.0.3
-twilio==7.15.1
-requests==2.31.0
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Werkzeug
+requests
+Flask-Mail
+app
